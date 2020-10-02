@@ -1,0 +1,41 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Free Trial (f3b351b2-15e7-4357-ac29-88133158db5b)'
+        appType: 'webAppContainer'
+        WebAppName: 'azuretrial'
+        deployToSlotOrASE: true
+        ResourceGroupName: 'azure-resource-group'
+        SlotName: 'production'
+        DockerNamespace: 'registry.irisdevlab.com'
+        DockerRepository: 'azuretrial'
+        DockerImageTag: 'latest'
