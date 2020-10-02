@@ -1,1 +1,1 @@
-<?php print "Hello World brooo - ini deploy dari azure devops - this is madness";
+<?php print "Hello World brooo - this is madness";
