@@ -2,6 +2,7 @@ FROM existenz/webstack:7.4-codecasts
 
 EXPOSE 80
 EXPOSE 443
+EXPOSE 2222
 
 RUN apk -U --no-cache add \
         php7 \
