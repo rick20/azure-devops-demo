@@ -1,8 +1,9 @@
 FROM existenz/webstack:7.4-codecasts
 
-EXPOSE 80
-EXPOSE 443
-EXPOSE 2222
+EXPOSE 80 443 2222
+
+RUN apk add openssh \
+    && echo "root:Docker!" | chpasswd 
 
 RUN apk -U --no-cache add \
         php7 \
