@@ -2,8 +2,15 @@ FROM existenz/webstack:7.4-codecasts
 
 EXPOSE 80 443 2222
 
-RUN apk add openssh \
-    && echo "root:Docker!" | chpasswd 
+RUN apk -U --no-cache add \
+    openssh \
+    && echo "root:Docker!" | chpasswd \
+    && rm  -rf /tmp/* /var/cache/apk/*
+
+COPY files/ssh /
+
+#make sure we get fresh keys
+RUN rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
 RUN apk -U --no-cache add \
         php7 \
