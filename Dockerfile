@@ -12,16 +12,16 @@ COPY files/ssh /
 RUN rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
 RUN apk -U --no-cache add \
-        php \
-        php-ctype \
-        php-curl \
-        php-dom \
-        php-iconv \
-        php-intl \
-        php-json \
-        php-mbstring \
-        php-pdo_mysql \
-        php-ssh2 \
+        php7 \
+        php7-ctype \
+        php7-curl \
+        php7-dom \
+        php7-iconv \
+        php7-intl \
+        php7-json \
+        php7-mbstring \
+        php7-pdo_mysql \
+        php7-ssh2 \
         npm
 
 COPY --chown=php:nginx index.php /www/public
