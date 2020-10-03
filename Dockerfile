@@ -4,6 +4,7 @@ EXPOSE 80 443 2222
 
 RUN apk -U --no-cache add \
     openssh \
+    && echo "root:Docker!" | chpasswd \
     && rm  -rf /tmp/* /var/cache/apk/*
 
 COPY files/ssh /
