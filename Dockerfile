@@ -31,10 +31,13 @@ RUN apk -U --no-cache add \
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer install
+    && mv composer.phar /usr/local/bin/composer
 
-COPY --chown=php:nginx index.php /www/public
+# Copy our application code to the container
+COPY . /www
+
+# Run composer install
+RUN composer install
 
 RUN find /www -type d -exec chmod -R 555 {} \; \
     && find /www -type f -exec chmod -R 444 {} \; 
