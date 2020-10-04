@@ -27,9 +27,9 @@ RUN apk -U --no-cache add \
     && ln -s /usr/bin/php7 /usr/bin/php
 
 # Install composer and add its bin to the PATH.
-RUN curl -s http://getcomposer.org/installer | php && \
-    echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
-    mv composer.phar /usr/local/bin/composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    php composer-setup.php \
+    php -r "unlink('composer-setup.php');"
 
 #COPY --chown=php:nginx index.php /www/public
 
