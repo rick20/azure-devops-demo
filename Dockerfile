@@ -38,4 +38,3 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 #    && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 755 {} \; \
 #    && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
 
-RUN apk cache clean
