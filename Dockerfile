@@ -23,7 +23,8 @@ RUN apk -U --no-cache add \
         php7-json \
         php7-mbstring \
         php7-pdo_mysql \
-        php7-zip
+        php7-zip \
+    && ln -s /usr/bin/php7 /usr/bin/php
 
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
@@ -37,3 +38,4 @@ RUN curl -s http://getcomposer.org/installer | php && \
 #    && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 755 {} \; \
 #    && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
 
+RUN apk cache clean
