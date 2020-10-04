@@ -29,8 +29,8 @@ RUN apk -U --no-cache add \
 
 # Install composer and add its bin to the PATH.
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    php composer-setup.php \
-    php -r "unlink('composer-setup.php');" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
     && composer install
 
