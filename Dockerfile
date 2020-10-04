@@ -9,9 +9,10 @@ RUN apk -U --no-cache add \
 
 COPY files/ssh /
 
-#make sure we get fresh keys
 RUN rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
+
+# Install "PHP Extentions"
 RUN apk -U --no-cache add \
         php7 \
         php7-ctype \
@@ -22,10 +23,15 @@ RUN apk -U --no-cache add \
         php7-json \
         php7-mbstring \
         php7-pdo_mysql \
-        php7-ssh2 \
-        npm
+        php7-zip \
+    && apk cache clean
 
-COPY --chown=php:nginx index.php /www/public
+# Install composer and add its bin to the PATH.
+RUN curl -s http://getcomposer.org/installer | php && \
+    echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
+    mv composer.phar /usr/local/bin/composer
+
+#COPY --chown=php:nginx index.php /www/public
 
 #RUN find /www -type d -exec chmod -R 555 {} \; \
 #    && find /www -type f -exec chmod -R 444 {} \; \
