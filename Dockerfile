@@ -24,17 +24,20 @@ RUN apk -U --no-cache add \
         php7-mbstring \
         php7-pdo_mysql \
         php7-zip \
+        php7-phar \
     && ln -s /usr/bin/php7 /usr/bin/php
 
 # Install composer and add its bin to the PATH.
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     php composer-setup.php \
-    php -r "unlink('composer-setup.php');"
+    php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer install
 
-#COPY --chown=php:nginx index.php /www/public
+COPY --chown=php:nginx index.php /www/public
 
-#RUN find /www -type d -exec chmod -R 555 {} \; \
-#    && find /www -type f -exec chmod -R 444 {} \; \
+RUN find /www -type d -exec chmod -R 555 {} \; \
+    && find /www -type f -exec chmod -R 444 {} \; 
 #    && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 755 {} \; \
 #    && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
 
