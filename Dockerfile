@@ -23,8 +23,7 @@ RUN apk -U --no-cache add \
         php7-json \
         php7-mbstring \
         php7-pdo_mysql \
-        php7-zip \
-    && apk cache clean
+        php7-zip
 
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
